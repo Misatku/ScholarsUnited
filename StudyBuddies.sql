@@ -19,7 +19,8 @@ SET time_zone = "+00:00";
 
 --
 -- Database: `StudyBuddies`
---
+-- Database run on 127.0.0.1:8082
+-- Database run on port 3309:3306
 
 -- --------------------------------------------------------
 
@@ -216,4 +217,3 @@ INSERT INTO BuddyRequests (RequestID, SenderID, ReceiverID, Status) VALUES
 INSERT INTO Notifications (NotificationID, UserID, Message, Timestamp) VALUES
 (1, 1, 'You have a new message from Bob Smith', '2024-07-11 09:00:00'),
 (2, 2, 'Event reminder: Cybersecurity Hackathon', '2024-07-12 10:00:00');
-
