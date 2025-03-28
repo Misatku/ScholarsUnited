@@ -1,12 +1,22 @@
 extends layout
-
 block content
-  h1 Search for Study Buddies
-  form(action='/search' method='GET')
-    label(for='interests') Interests:
-    input(type='text' name='interests')
-    label(for='study_modules') Study Modules:
-    input(type='text' name='study_modules')
-    label(for='availability') Availability:
-    input(type='text' name='availability')
-    button(type='submit') Search
+  section.main-content
+    .section-box
+      h1 Search Study Buddies
+
+      form(action="/search", method="GET")
+        .form-group
+          input(type="text", name="query", placeholder="Search by name, course, interest")
+
+        button.btn.btn-primary(type="submit") Search
+
+    if results && results.length
+      h2 Results
+      .card-container
+        each user in results
+          .profile-card
+            h3= user.fullName
+            p= user.interests || 'No interests listed'
+            a(href=`/users/${user._id}` class="btn btn-secondary") View Profile
+    else if results
+      p No matching users found.

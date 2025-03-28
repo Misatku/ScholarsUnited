@@ -1,30 +1,17 @@
 extends layout
-
 block content
-  .container
-    header.header
-      nav.navbar
-        .logo LOGO
-        ul.nav-links
-          li: a(href='/') MATCHMAKING
-          li: a(href='/calendar') CALENDAR
-          li: a(href='/events') EVENTS
-          li: a(href='/courses') COURSES
-          li: a(href='/messaging') MESSAGING
-          li: a(href='/dashboard') DASHBOARD
+  section.main-content
+    .section-box
+      if event
+        h1= event.Title
+        p.event-date #{event.Date} at #{event.Time}
+        p.event-location Location: #{event.Location || 'Not specified'}
+        p= event.Description
 
-    //- Event Details Section
-    section.event-details-section
-      h2= event.Title
-      .event-info
-        p.event-date-time
-          strong Date: 
-          | #{event.date} at #{event.time}
-        p.event-location
-          strong Location: 
-          | #{event.Location || 'Not specified'}
-        p.event-description
-          strong Description: 
-          | #{event.Description || 'No description available'}
-
-      a(href='/events' class='btn btn-primary') Back to Events
+        if !joined
+          form(action=`/events/join/${event.EventID}`, method="POST")
+            button.btn.btn-primary Join This Event
+        else
+          p You have already joined this event.
+      else
+        p Event not found or does not exist.

@@ -1,12 +1,18 @@
 extends layout
-
 block content
-  h1 Update Profile
-  form(action='/profile/update' method='POST')
-    label(for='interests') Interests:
-    input(type='text' name='interests')
-    label(for='courses') Courses:
-    input(type='text' name='courses')
-    label(for='free_time') Free Time Windows:
-    input(type='text' name='free_time')
-    button(type='submit') Update Profile
+  section.main-content
+    .section-box
+      h1 Profile: #{user.fullName}
+
+      p Email: #{user.email}
+      p Interests: #{user.interests || 'Not specified'}
+      p Year: #{user.year || 'N/A'}
+
+      h2 Events You've Joined
+      if userEvents && userEvents.length
+        ul
+          each event in userEvents
+            li
+              a(href=`/events/${event.EventID}`) #{event.Title}
+      else
+        p You haven't joined any events yet.
