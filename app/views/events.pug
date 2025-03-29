@@ -1,19 +1,21 @@
 extends layout
 block content
-  section.events-section
-    h2 Upcoming Events
-    a(href='/events/create' class='btn btn-primary create-event-btn') Create Event
+  
+    section.events-section
+      h2 Upcoming Events
+      a(href='/events/create' class='btn btn-primary create-event-btn') Create Event
 
-    if events && events.length
-      .event-list
-        each event in events
-          .event-box
-            .event-header
-              h3= event.Title
-              span.event-date= event.date + " at " + event.time
-            .event-location
-              p Location: #{event.Location || 'Not specified'}
-            .event-actions
-              a(href=`/events/${event.EventID}` class='btn btn-secondary') View Details
-    else
-      p No upcoming events found.
+      //- Event Listings
+      if events && events.length
+        .event-list
+          each event in events
+            .event-box
+              .event-header
+                h3= event.Title
+                span.event-date= event.date + " at " + event.time
+              .event-location
+                p Location: #{event.Location || 'Not specified'}
+              .event-actions
+                a(href=`/events/${event.EventID}` class='btn btn-secondary') View Details
+      else
+        p No upcoming events found.

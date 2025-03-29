@@ -16,7 +16,8 @@ services:
     env_file:
       - ./.env
     ports:
-      - "3309:3306"
+      - "3309:3306"   # Host 3309 ➝ Container 3306
+
     volumes:
       - ./db:/var/lib/mysql
   phpmyadmin:
