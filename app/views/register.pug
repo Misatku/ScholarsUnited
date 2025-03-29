@@ -1,24 +1,99 @@
 extends layout
+
 block content
   section.signup-section
     .signup-box
-      h1 Register
+      h1 Sign Up
 
-      form(action="/register", method="POST")
-        .form-group
-          label(for="fullName") Full Name
-          input(type="text", name="fullName", required)
+      // Progress Bar
+      .progress-bar
+        .progress-step.active Step 1
+        .progress-step Step 2
+        .progress-step Step 3
+        .progress-step Step 4
 
-        .form-group
-          label(for="email") Email
-          input(type="email", name="email", required)
+      form(id="signup-form" action='/register' method='POST')
+        // Step 1: Email + Password
+        .form-step.active
+          .form-group
+            label(for='email') Email:
+            input(type='email' name='email' id='email' required)
+          .form-group
+            label(for='password') Password:
+            input(type='password' name='password' id='password' required)
+          button(type="button" class="btn btn-primary next-step") Next
 
-        .form-group
-          label(for="password") Password
-          input(type="password", name="password", required)
+        // Step 2: Full Name + Interests
+        .form-step
+          .form-group
+            label(for='fullName') Full Name:
+            input(type='text' name='fullName' id='fullName' required)
+          .form-group
+            label(for='interests') Interests:
+            input(type='text' name='interests' id='interests')
+          .form-nav
+            button(type="button" class="btn btn-secondary prev-step") Back
+            button(type="button" class="btn btn-primary next-step") Next
 
-        button.btn.btn-primary(type="submit") Register
+        // Step 3: Hobbies + Academic Info
+        .form-step
+          .form-group
+            label(for='hobbies') Hobbies:
+            input(type='text' name='hobbies' id='hobbies')
+          .form-group
+            label(for='academic_info') Academic Info:
+            input(type='text' name='academic_info' id='academic_info')
+          .form-nav
+            button(type="button" class="btn btn-secondary prev-step") Back
+            button(type="button" class="btn btn-primary next-step") Next
 
-      p(style="text-align:center; margin-top: 15px")
-        | Already have an account?
-        a(href="/login" style="color: var(--primary); font-weight: 500; margin-left: 5px") Login
+        // Step 4: Time Frames + Submit
+        .form-step
+          .form-group
+            label(for='time_frames') Available Time Frames:
+            input(type='text' name='time_frames' id='time_frames')
+          .form-nav
+            button(type="button" class="btn btn-secondary prev-step") Back
+            button.btn.btn-primary(type='submit') Sign Up
+
+      if messages && messages.error
+        .alert.alert-danger
+          each error in messages.error
+            p= error
+
+      if messages && messages.success
+        .alert.alert-success
+          each msg in messages.success
+            p= msg
+
+  script.
+    document.addEventListener('DOMContentLoaded', () => {
+      const steps = document.querySelectorAll('.form-step');
+      const progress = document.querySelectorAll('.progress-step');
+      let current = 0;
+
+      function updateStepDisplay() {
+        steps.forEach((step, i) => {
+          step.classList.toggle('active', i === current);
+          progress[i].classList.toggle('active', i <= current);
+        });
+      }
+
+      document.querySelectorAll('.next-step').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (current < steps.length - 1) {
+            current++;
+            updateStepDisplay();
+          }
+        });
+      });
+
+      document.querySelectorAll('.prev-step').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (current > 0) {
+            current--;
+            updateStepDisplay();
+          }
+        });
+      });
+    });

@@ -1,4 +1,5 @@
 extends layout
+
 block content
   section.login-section
     .login-box
@@ -6,13 +7,23 @@ block content
 
       form(action="/login", method="POST")
         .form-group
-          input(type="email", name="email", required, placeholder="Enter your email")
-
+          input(type="email", name="email", required, placeholder="Your university email")
         .form-group
-          input(type="password", name="password", required, placeholder="Enter your password")
-
+          input(type="password", name="password", required, placeholder="Password")
         button.btn.btn-primary(type="submit") Login
 
       p(style="text-align:center; margin-top: 15px")
         | Don't have an account?
         a(href="/register" style="color: var(--primary); font-weight: 500; margin-left: 5px") Register
+
+
+        //- Flash Messages
+        if messages && messages.error
+          .alert.alert-danger
+            each error in messages.error
+              p= error
+
+        if messages && messages.success
+          .alert.alert-success
+            each msg in messages.success
+              p= msg
