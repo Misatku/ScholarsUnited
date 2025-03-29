@@ -21,7 +21,8 @@ block content
           .form-group
             label(for='password') Password:
             input(type='password' name='password' id='password' required)
-          button(type="button" class="btn btn-primary next-step") Next
+          .form-group
+            button(type="button" class="btn btn-primary next-step") Next
 
         // Step 2: Full Name + Interests
         .form-step
@@ -47,15 +48,19 @@ block content
             button(type="button" class="btn btn-secondary prev-step") Back
             button(type="button" class="btn btn-primary next-step") Next
 
-        // Step 4: Time Frames + Submit
+        // Step 4: Availability From/To + Submit
         .form-step
           .form-group
-            label(for='time_frames') Available Time Frames:
-            input(type='text' name='time_frames' id='time_frames')
+            label(for='available_from') Available From:
+            input(type='datetime-local' name='available_from' id='available_from' required)
+          .form-group
+            label(for='available_to') Available To:
+            input(type='datetime-local' name='available_to' id='available_to' required)
           .form-nav
             button(type="button" class="btn btn-secondary prev-step") Back
             button.btn.btn-primary(type='submit') Sign Up
 
+      // Flash Messages
       if messages && messages.error
         .alert.alert-danger
           each error in messages.error
