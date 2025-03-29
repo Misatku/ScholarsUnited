@@ -17,21 +17,33 @@ block content
         .form-step.active
           .form-group
             label(for='email') Email:
-            input(type='email' name='email' id='email' required)
+            input(type='email' name='email' id='email' placeholder='Your university email' required)
           .form-group
             label(for='password') Password:
-            input(type='password' name='password' id='password' required)
+            input(type='password' name='password' id='password' placeholder='Password' required)
           .form-group
             button(type="button" class="btn btn-primary next-step") Next
 
-        // Step 2: Full Name + Interests
+        // Step 2: Full Name + Study Interests
         .form-step
           .form-group
             label(for='fullName') Full Name:
             input(type='text' name='fullName' id='fullName' required)
           .form-group
-            label(for='interests') Interests:
-            input(type='text' name='interests' id='interests')
+            label(for='interests') Study Interests:
+            select(name='interests' id='interests' multiple required class='choices-multiple')
+              option(value='Math') Math
+              option(value='AI') AI
+              option(value='Psychology') Psychology
+              option(value='Design') Design
+              option(value='Law') Law
+              option(value='Programming') Programming
+              option(value='Biology') Biology
+              option(value='History') History
+              option(value='Literature') Literature
+              option(value='Economics') Economics
+              option(value='Sociology') Sociology
+              option(value='Physics') Physics
           .form-nav
             button(type="button" class="btn btn-secondary prev-step") Back
             button(type="button" class="btn btn-primary next-step") Next
@@ -60,6 +72,11 @@ block content
             button(type="button" class="btn btn-secondary prev-step") Back
             button.btn.btn-primary(type='submit') Sign Up
 
+      // Redirect to Login
+      p.signup-login-link
+        | Already have an account?
+        a(href="/login") Login
+
       // Flash Messages
       if messages && messages.error
         .alert.alert-danger
@@ -70,6 +87,10 @@ block content
         .alert.alert-success
           each msg in messages.success
             p= msg
+
+  // External Choices.js
+  script(src='https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js')
+  link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css')
 
   script.
     document.addEventListener('DOMContentLoaded', () => {
@@ -100,5 +121,14 @@ block content
             updateStepDisplay();
           }
         });
+      });
+
+      new Choices('#interests', {
+        removeItemButton: true,
+        placeholder: true,
+        placeholderValue: 'Select your interests',
+        maxItemCount: 6,
+        searchResultLimit: 10,
+        renderChoiceLimit: -1
       });
     });
